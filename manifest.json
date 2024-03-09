@@ -11,7 +11,7 @@
     "display": "standalone",
     "icons": [
         {
-            "src": "/icon512.png",
+            "src": "/pbl_dopleris/icon512.png",
             "sizes": "512x512"
         }
     ]
