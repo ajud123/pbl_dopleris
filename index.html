@@ -2,7 +2,7 @@
 <html lang="en-US" dir="ltr">
     <!-- npx http-server -->
     <head>
-        <link rel="manifest" href="/manifest.json">
+        <link rel="manifest" href="manifest.json">
         <meta charset="UTF-8" />
         <meta name="viewport" content="width=device-width,initial-scale=1" />
         <link rel="shortcut icon" href="https://c.s-microsoft.com/favicon.ico?v2" />
@@ -15,11 +15,11 @@
     <h1 class="calculatedSpeed">Speed: N/A</h1>
 
 </body>
-<script src="/speed.js"></script>
+<script src="speed.js"></script>
 
 <script>
     if('serviceWorker' in navigator) {
-        navigator.serviceWorker.register('/sw.js', { scope: '/' });
+        navigator.serviceWorker.register('sw.js', { scope: '/' });
     }
 </script>
 
