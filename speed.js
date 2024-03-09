@@ -14,7 +14,7 @@ function getLocalStream() {
         window.analyser.minDecibels = -110;
         window.analyser.maxDecibels = 0;
         window.analyser.smoothingTimeConstant = 0.85;
-        window.analyser.connect(window.audioCtx.destination)
+        //window.analyser.connect(window.audioCtx.destination)
         drawBars();
         //callback(stream);
 
@@ -40,16 +40,17 @@ function callback(stream) {
     dataArray = new Uint8Array(bufferLength);
     spe.getByteTimeDomainData(dataArray);
     mic.connect(spe);
-    spe.connect(ctx.destination);
+    //spe.connect(ctx.destination);
 }
 bufferLength = fftSize;
 
 const WIDTH = 1600
 const HEIGHT = 100
 
-const TargetFrequency = 470;
+window.TargetFrequency = 470;
 
 function draw() {
+  update_values()
     canvasCtx.clearRect(0,0,WIDTH,HEIGHT)
     dataArray = new Uint8Array(bufferLength);
     drawVisual = requestAnimationFrame(draw);
@@ -88,6 +89,7 @@ function scale (number, inMin, inMax, outMin, outMax) {
 }
 
 function drawBars(){
+  update_values()
     const bufferLengthAlt = window.analyser.frequencyBinCount;
     canvasCtx.clearRect(0,0,WIDTH,HEIGHT)
     dataArrayAlt = new Uint8Array(bufferLengthAlt);
@@ -100,10 +102,10 @@ function drawBars(){
     const barWidth = (WIDTH / bufferLengthAlt) * 2.5;
     let x = 0;
     const maxSpeed = 150/3.6
-    const maxSpeedFreq = ((343 + 0)/(343 - maxSpeed))*TargetFrequency;
-    const minSpeedFreq = ((343 + 0)/(343 + maxSpeed))*TargetFrequency;
-
-    const dFreqIdx = scale(TargetFrequency, 0, audioCtx.sampleRate/2, 0, bufferLengthAlt);
+    const maxSpeedFreq = ((343 + 0)/(343 - maxSpeed))*window.TargetFrequency;
+    const minSpeedFreq = ((343 + 0)/(343 + maxSpeed))*window.TargetFrequency;
+    console.log({max: maxSpeedFreq, min: minSpeedFreq})
+    const dFreqIdx = scale(window.TargetFrequency, 0, audioCtx.sampleRate/2, 0, bufferLengthAlt);
     const dMaxFreqIdx = scale(maxSpeedFreq, 0, audioCtx.sampleRate/2, 0, bufferLengthAlt);
     const dMinFreqIdx = scale(minSpeedFreq, 0, audioCtx.sampleRate/2, 0, bufferLengthAlt);
 
@@ -130,7 +132,7 @@ function drawBars(){
         foundFreqVal = barHeight;
         foundFreqIdx = i;
       }
-      canvasCtx.fillStyle = "rgb(" + (barHeight + 100) + ",100,100)";
+      canvasCtx.fillStyle = "rgb(255,255,255)";
       canvasCtx.fillRect(
         x,
         HEIGHT - barHeight / 2,
@@ -141,7 +143,7 @@ function drawBars(){
     }
     const foundFreq = scale(foundFreqIdx, 0, bufferLengthAlt, 0, audioCtx.sampleRate/2);
     if(foundFreqIdx != -1)
-      speedview.innerHTML = "Speed: " + convertToSpeed(foundFreq, TargetFrequency) + " km/h"
+      speedview.innerHTML = "Speed: " + convertToSpeed(foundFreq, window.TargetFrequency) + " km/h"
     //console.log({found: convertToSpeed(foundFreq, TargetFrequency), freq: foundFreq})
 }
 
@@ -150,3 +152,8 @@ function convertToSpeed(obs, base) {
 }
 //drawBars();
 
+function update_values(){
+  window.analyser.minDecibels = parseInt(window.minDecibels.value);
+  window.analyser.maxDecibels = parseInt(window.maxDecibels.value);
+  window.TargetFrequency = parseInt(window.targetFreq.value);
+}

@@ -11,9 +11,16 @@
 <body>
     <h1>Doppler speedometer</h1>
     <audio id="localAudio"></audio>
-    <canvas class="visualizer" width="1600" height="100"></canvas>
+    <canvas class="visualizer" width="400" height="100"></canvas>
     <h1 class="calculatedSpeed">Speed: N/A</h1>
-
+    <label for="targetFreq">Target frequency:</label>
+    <input type="number" id="targetFreq" value="470">
+    <br>
+    <label for="minDecibels">Min decibels for analyser:</label>
+    <input type="number" id="minDecibels" value="-110">
+    <br>
+    <label for="maxDecibels">Max decibels for analyser:</label>
+    <input type="number" id="maxDecibels" value="0">
 </body>
 <script src="speed.js"></script>
 
