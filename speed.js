@@ -5,14 +5,16 @@ function getLocalStream() {
     .then((stream) => {
         window.localStream = stream; // A
         window.localAudio.srcObject = stream; // B
-        window.localAudio.autoplay = true; // C
-        source = audioCtx.createMediaStreamSource(window.localAudio.srcObject)
-        source.connect(analyser)
-        analyser.fftSize = fftSize;
-        analyser.minDecibels = -110;
-        analyser.maxDecibels = 0;
-        analyser.smoothingTimeConstant = 0.85;
-        analyser.connect(audioCtx.destination)
+        //window.localAudio.autoplay = true; // C
+        window.audioCtx = new AudioContext();
+        window.analyser = window.audioCtx.createAnalyser();
+        source = window.audioCtx.createMediaStreamSource(window.localAudio.srcObject)
+        source.connect(window.analyser)
+        window.analyser.fftSize = fftSize;
+        window.analyser.minDecibels = -110;
+        window.analyser.maxDecibels = 0;
+        window.analyser.smoothingTimeConstant = 0.85;
+        window.analyser.connect(window.audioCtx.destination)
         //callback(stream);
 
     })
@@ -20,8 +22,8 @@ function getLocalStream() {
     console.error(`you got an error: ${err}`);
     });
 }
-const audioCtx = new AudioContext();
-const analyser = audioCtx.createAnalyser();
+//const audioCtx = new AudioContext();
+//const analyser = audioCtx.createAnalyser();
 getLocalStream()
 const canvas = document.querySelector(".visualizer");
 const speedview = document.querySelector(".calculatedSpeed");
@@ -51,7 +53,7 @@ function draw() {
     dataArray = new Uint8Array(bufferLength);
     drawVisual = requestAnimationFrame(draw);
   
-    analyser.getByteTimeDomainData(dataArray);
+    window.analyser.getByteTimeDomainData(dataArray);
   
     canvasCtx.fillStyle = "rgb(200 200 200)";
     canvasCtx.fillRect(0, 0, WIDTH, HEIGHT);
@@ -85,11 +87,11 @@ function scale (number, inMin, inMax, outMin, outMax) {
 }
 
 function drawBars(){
-    const bufferLengthAlt = analyser.frequencyBinCount;
+    const bufferLengthAlt = window.analyser.frequencyBinCount;
     canvasCtx.clearRect(0,0,WIDTH,HEIGHT)
     dataArrayAlt = new Uint8Array(bufferLengthAlt);
     drawVisual = requestAnimationFrame(drawBars);
-    analyser.getByteFrequencyData(dataArrayAlt);
+    window.analyser.getByteFrequencyData(dataArrayAlt);
 
     canvasCtx.fillStyle = "rgb(0, 0, 0)";
     canvasCtx.fillRect(0, 0, WIDTH, HEIGHT);
