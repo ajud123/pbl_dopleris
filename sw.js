@@ -1,4 +1,4 @@
-const CACHE_NAME = `temperature-converter-v002`;
+const CACHE_NAME = `temperature-converter-v003`;
 
 // Use the install event to pre-cache all initial resources.
 self.addEventListener('install', event => {
