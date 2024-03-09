@@ -15,6 +15,7 @@ function getLocalStream() {
         window.analyser.maxDecibels = 0;
         window.analyser.smoothingTimeConstant = 0.85;
         window.analyser.connect(window.audioCtx.destination)
+        drawBars();
         //callback(stream);
 
     })
@@ -147,5 +148,5 @@ function drawBars(){
 function convertToSpeed(obs, base) {
   return (343 - ((343 + 0)/obs) * base) * 3.6;
 }
-drawBars();
-  //draw();
+//drawBars();
+
