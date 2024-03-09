@@ -104,7 +104,6 @@ function drawBars(){
     const maxSpeed = 150/3.6
     const maxSpeedFreq = ((343 + 0)/(343 - maxSpeed))*window.TargetFrequency;
     const minSpeedFreq = ((343 + 0)/(343 + maxSpeed))*window.TargetFrequency;
-    console.log({max: maxSpeedFreq, min: minSpeedFreq})
     const dFreqIdx = scale(window.TargetFrequency, 0, audioCtx.sampleRate/2, 0, bufferLengthAlt);
     const dMaxFreqIdx = scale(maxSpeedFreq, 0, audioCtx.sampleRate/2, 0, bufferLengthAlt);
     const dMinFreqIdx = scale(minSpeedFreq, 0, audioCtx.sampleRate/2, 0, bufferLengthAlt);
