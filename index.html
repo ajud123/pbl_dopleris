@@ -1,0 +1,26 @@
+<!DOCTYPE html>
+<html lang="en-US" dir="ltr">
+    <!-- npx http-server -->
+    <head>
+        <link rel="manifest" href="/manifest.json">
+        <meta charset="UTF-8" />
+        <meta name="viewport" content="width=device-width,initial-scale=1" />
+        <link rel="shortcut icon" href="https://c.s-microsoft.com/favicon.ico?v2" />
+        <title>Temperature converter v8</title>
+    </head>
+<body>
+    <h1>Temperature converter v11</h1>
+    <audio id="localAudio"></audio>
+    <canvas class="visualizer" width="1600" height="100"></canvas>
+    <h1 class="calculatedSpeed">Speed: N/A</h1>
+
+</body>
+<script src="/speed.js"></script>
+
+<script>
+    if('serviceWorker' in navigator) {
+        navigator.serviceWorker.register('/sw.js', { scope: '/' });
+    }
+</script>
+
+</html>
