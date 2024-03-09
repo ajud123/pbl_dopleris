@@ -1,9 +1,10 @@
 {
     "lang": "en-us",
-    "name": "Temperature converter a",
-    "short_name": "Temperature converter",
-    "description": "A basic temperature converter application that can convert to and from Celsius, Kelvin, and Fahrenheit",
-    "start_url": "/",
+    "name": "Doppler speedometer",
+    "short_name": "DopplerSpeedometer",
+    "description": "A basic program used to measure the speed of an object using the doppler effect",
+    "start_url": "/pbl_dopleris/",
+    "scope": "/pbl_dopleris/",
     "background_color": "#2f3d58",
     "theme_color": "#2f3d58",
     "orientation": "any",
@@ -13,6 +14,5 @@
             "src": "/icon512.png",
             "sizes": "512x512"
         }
-    ],
-    "id": "__testpwa-v1__"
+    ]
 }
