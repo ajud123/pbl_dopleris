@@ -1,7 +1,14 @@
 const fftSize = 32768
+const constraints = {
+  audio: {
+    noiseSuppression: false,
+    echoCancellation: false, // Optional: Enable echo cancellation
+  },
+  video: false
+}
 function getLocalStream() {
     navigator.mediaDevices
-    .getUserMedia({ video: false, audio: true })
+    .getUserMedia(constraints)
     .then((stream) => {
         window.localStream = stream; // A
         window.localAudio.srcObject = stream; // B
