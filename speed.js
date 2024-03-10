@@ -98,7 +98,6 @@ function scale (number, inMin, inMax, outMin, outMax) {
 }
 
 function drawBars(){
-  update_values()
     const bufferLengthAlt = window.analyser.frequencyBinCount;
     canvasCtx.clearRect(0,0,WIDTH,HEIGHT)
     dataArrayAlt = new Uint8Array(bufferLengthAlt);
