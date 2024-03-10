@@ -11,7 +11,7 @@
 <body>
     <h1>Doppler speedometer</h1>
     <audio id="localAudio"></audio>
-    <canvas class="visualizer" width="device-width" height="100"></canvas>
+    <canvas class="visualizer" width="device-width" height="300"></canvas>
     <h1 class="calculatedSpeed">Speed: N/A</h1>
     <label for="targetFreq">Target frequency:</label>
     <input type="number" id="targetFreq" value="470">
@@ -21,6 +21,10 @@
     <br>
     <label for="maxDecibels">Max decibels for analyser:</label>
     <input type="number" id="maxDecibels" value="0">
+    <br>
+    <br>
+    <label for="detectionThreshold">Detection threshold:</label>
+    <input onchange="update_slider()" type="range" min="1" max="255" value="28" id="detectionThreshold" value="0">
     <button onclick="update_values()">Update data</button>
 </body>
 <script src="speed.js"></script>

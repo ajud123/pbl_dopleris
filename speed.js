@@ -54,7 +54,7 @@ bufferLength = fftSize;
 var width = (window.innerWidth > 0) ? window.innerWidth : screen.width;
 canvas.width = width;
 const WIDTH = canvas.width;
-const HEIGHT = 100
+const HEIGHT = canvas.height;
 
 window.TargetFrequency = 470;
 
@@ -123,9 +123,10 @@ function drawBars(){
       canvasCtx.fillStyle = "rgb(" + (barHeight + 100) + ",50,50)";
       canvasCtx.fillRect(
         x,
-        HEIGHT - barHeight / 2,
+        //HEIGHT - barHeight,
+        HEIGHT - scale(barHeight, 0, 255, 0, HEIGHT),
         barWidth,
-        barHeight / 2
+        scale(barHeight, 0, 255, 0, HEIGHT)
       );
 
       x += barWidth;
@@ -135,22 +136,28 @@ function drawBars(){
     x = barWidth*Math.floor(dMinFreqIdx-1);
     for (let i = Math.floor(dMinFreqIdx-1); i < Math.floor(dMaxFreqIdx+1); i++) {
       const barHeight = dataArrayAlt[i];
-      if(barHeight > foundFreqVal && barHeight > 28){
+      if(barHeight > foundFreqVal && barHeight > window.minValue){
         foundFreqVal = barHeight;
         foundFreqIdx = i;
       }
       canvasCtx.fillStyle = "rgb(255,255,255)";
       canvasCtx.fillRect(
         x,
-        HEIGHT - barHeight / 2,
+        //HEIGHT - barHeight,
+        HEIGHT - scale(barHeight, 0, 255, 0, HEIGHT),
         barWidth,
-        barHeight / 2
+        scale(barHeight, 0, 255, 0, HEIGHT)
       );
       x += barWidth;
     }
     const foundFreq = scale(foundFreqIdx, 0, bufferLengthAlt, 0, audioCtx.sampleRate/2);
     if(foundFreqIdx != -1)
       speedview.innerHTML = "Speed: " + Math.round(convertToSpeed(foundFreq, window.TargetFrequency)*100)/100 + " km/h"
+    canvasCtx.fillStyle = "rgb(255,0,0)";
+    canvasCtx.fillRect(
+      0, HEIGHT - scale(window.minValue, 0, 255, 0, HEIGHT),
+      WIDTH, 2
+    )
     //console.log({found: convertToSpeed(foundFreq, TargetFrequency), freq: foundFreq})
 }
 
@@ -169,4 +176,9 @@ function update_values(){
   }
   if(freq > 0)
     window.TargetFrequency = freq
+}
+
+function update_slider() {
+  var minThreshold = parseInt(window.detectionThreshold.value);
+  window.minValue = minThreshold;
 }
