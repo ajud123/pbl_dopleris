@@ -161,7 +161,13 @@ function convertToSpeed(obs, base) {
 //drawBars();
 
 function update_values(){
-  window.analyser.minDecibels = parseInt(window.minDecibels.value);
-  window.analyser.maxDecibels = parseInt(window.maxDecibels.value);
-  window.TargetFrequency = parseInt(window.targetFreq.value);
+  var minDb = parseInt(window.minDecibels.value);
+  var maxDb = parseInt(window.maxDecibels.value);
+  var freq = parseInt(window.targetFreq.value);
+  if(minDb < maxDb){
+    window.analyser.minDecibels = minDb
+    window.analyser.maxDecibels = maxDb
+  }
+  if(freq > 0)
+    window.TargetFrequency = freq
 }
