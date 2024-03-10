@@ -44,7 +44,9 @@ function callback(stream) {
 }
 bufferLength = fftSize;
 
-const WIDTH = 1600
+var width = (window.innerWidth > 0) ? window.innerWidth : screen.width;
+canvas.width = width;
+const WIDTH = canvas.width;
 const HEIGHT = 100
 
 window.TargetFrequency = 470;
@@ -120,11 +122,11 @@ function drawBars(){
         barHeight / 2
       );
 
-      x += barWidth + 1;
+      x += barWidth;
     }
     let foundFreqIdx = -1;
     let foundFreqVal = -1;
-    x = 0;
+    x = barWidth*Math.floor(dMinFreqIdx-1);
     for (let i = Math.floor(dMinFreqIdx-1); i < Math.floor(dMaxFreqIdx+1); i++) {
       const barHeight = dataArrayAlt[i];
       if(barHeight > foundFreqVal && barHeight > 28){
@@ -138,11 +140,11 @@ function drawBars(){
         barWidth,
         barHeight / 2
       );
-      x += barWidth + 1;
+      x += barWidth;
     }
     const foundFreq = scale(foundFreqIdx, 0, bufferLengthAlt, 0, audioCtx.sampleRate/2);
     if(foundFreqIdx != -1)
-      speedview.innerHTML = "Speed: " + convertToSpeed(foundFreq, window.TargetFrequency) + " km/h"
+      speedview.innerHTML = "Speed: " + Math.round(convertToSpeed(foundFreq, window.TargetFrequency)*100)/100 + " km/h"
     //console.log({found: convertToSpeed(foundFreq, TargetFrequency), freq: foundFreq})
 }
 
